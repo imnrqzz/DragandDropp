@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <style>
+        /* General styling for the body */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            color: #333;
+            background-color: #f3df9c;
+        }
+
+        /* Styling for the container */
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Styling for draggable and droppable containers */
+        .draggableContainer,
+        .droppableContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Styling for draggable and droppable boxes */
+        .box,
+        .droppable {
+            background-color: yellow;
+            height: 30px;
+            width: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            position: relative;
+            z-index: 2;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: red;
+            border: 1px solid #333;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+            border: 2px solid #333;
+        }
+
+        /* Hover effect for draggable and droppable boxes */
+        .box:hover,
+        .droppable:hover {
+            background-color: yellow;
+        }
+
+        /* Styling for droppable boxes */
+        .droppable {
+            background-color: rgb(201, 68, 68);
+            border: 2px solid white;
+        }
+
+        /* Styling for the draggable format */
+        .draggableFormat {
+            font-weight: bold;
+            color: red;
+            border: 5px solid black;
+        }
+
+        /* Styling for the score section */
+        #scoreSection {
+            z-index: 1;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            color: black;
+            background-color: #cdeecd;
+            padding: 20px;
+            font-weight: bolder;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+
+        /* Styling for remarks section */
+        #remarksDiv {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f1f7b5;
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-weight: bolder;
+            border: 2px solid black;
+            color: green; /* Change text color to green */
+            font-size: 18px; /* Change font size to 18px */
+            text-align: center; /* Center-align the text */
+        }
+
+        /* Styling for images */
+        img {
+            width: 150px;
+            height: 150px;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #333;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            border-radius: 5px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Hover effect for images */
+        img:hover {
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3), inset 0 0 12px rgba(0, 0, 0, 0.4);
+            transform: scale(1.1);
+        }
+
+        /* Styling for h1 */
+        h1 {
+            font-size: 40px;
+            color: red; /* Red color, you can adjust this */
+            margin-bottom: 20px;
+            -webkit-text-stroke:  1px #333;
+            background-color: yellow;
+            padding: 20px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            border: 4px solid #333;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Game title -->
+    <h1>Fast Food Matching Game</h1>
+
+    <!-- Draggable items container -->
+    <div class="draggableContainer">
+        <div class="box" draggable="true" id="drag1">Burger</div>
+        <div class="box" draggable="true" id="drag2">Pizza</div>
+        <div class="box" draggable="true" id="drag3">Fries</div>
+        <div class="box" draggable="true" id="drag4">Hotdog</div>
+        <div class="box" draggable="true" id="drag5">Chicken Nuggets</div>
+        <div class="box" draggable="true" id="drag6">Taco</div>
+        <div class="box" draggable="true" id="drag7">Burrito</div>
+        <div class="box" draggable="true" id="drag8">Sandwich</div>
+        <div class="box" draggable="true" id="drag9">Sushi</div>
+        <div class="box" draggable="true" id="drag10">Ice Cream</div>
+    </div>
+
+    <!-- Droppable items container -->
+    <div class="droppableContainer">
+        <div class="image1"><img src="https://img.freepik.com/free-vector/cute-burger-holding-french-fries-cartoon-vector-icon-illustration-food-object-icon-concept-isolated_138676-6371.jpg" alt="">
+            <div class="droppable" id="drop1" data-draggable-id="drop1"></div>
+        </div>
+
+        <div class="image1"><img src="https://t3.ftcdn.net/jpg/06/12/86/62/360_F_612866220_1VuIarMVLgoDAYUtBicQwXNKu07InXyf.jpg" alt="">
+            <div class="droppable" id="drop2" data-draggable-id="drop2"></div>
+        </div>
+
+        <div class="image1"><img src="https://static.vecteezy.com/system/resources/previews/021/620/251/original/french-fries-cartoon-icon-illustration-french-fries-in-a-paper-red-pack-fried-potatoes-food-icon-concept-illustration-suitable-for-icon-logo-sticker-clipart-free-vector.jpg" alt="">
+            <div class="droppable" id="drop3" data-draggable-id="drop3"></div>
+        </div>
+        <div class="image1"><img src="https://media.istockphoto.com/id/1146404440/vector/hot-dog-with-mustard-hand-drawing.jpg?s=612x612&w=0&k=20&c=b4tmD8q4AClUIQZF5zjto04VW9LTyqzgpt8HuFUGuVM=" alt="">
+            <div class="droppable" id="drop4" data-draggable-id="drop4"></div>
+        </div>
+
+        <div class="image1"><img src="https://static.vecteezy.com/system/resources/previews/021/161/623/original/chicken-nuggets-fried-cartoon-illustration-vector.jpg" alt="">
+            <div class="droppable" id="drop5" data-draggable-id="drop5"></div>
+        </div>
+
+        <div class="image1"><img src="https://static.vecteezy.com/system/resources/previews/004/217/776/original/cute-taco-cartoon-design-vector.jpg" alt="">
+            <div class="droppable" id="drop6" data-draggable-id="drop6"></div>
+        </div>
+
+        <div class="image1"><img src="https://t3.ftcdn.net/jpg/01/83/38/48/360_F_183384884_4EhPouTgmeNgthVBldqN1nOMRFctrLvm.jpg" alt="">
+            <div class="droppable" id="drop7" data-draggable-id="drop7"></div>
+        </div>
+
+        <div class="image1"><img src="https://img.freepik.com/free-vector/ham-cheese-sandwich-sticker-white-background_1308-70336.jpg?size=626&ext=jpg&ga=GA1.1.1412446893.1705190400&semt=ais" alt="">
+            <div class="droppable" id="drop8" data-draggable-id="drop8"></div>
+        </div>
+        <div class="image1"><img src="https://t3.ftcdn.net/jpg/06/05/68/70/360_F_605687063_TP22ett4eh8SXvjjnC9UkAD8rpt0L1xI.jpg" alt="">
+            <div class="droppable" id="drop9" data-draggable-id="drop9"></div>
+        </div>
+
+        <div class="image1"><img src="https://static.vecteezy.com/system/resources/previews/010/392/326/original/ice-cream-illustration-cute-colorful-ice-cream-cartoon-illustration-vector.jpg" alt="">
+            <div class="droppable" id="drop10" data-draggable-id="drop10"></div>
+        </div>
+    </div>
+
+    <!-- Remarks section -->
+    <div id="remarksDiv"></div>
+
+    <!-- Score section -->
+    <div id="scoreSection">Score: <span id="scoreValue">0</span></div>
+
+    <!-- JavaScript for drag and drop functionality -->
+    <script>
+        const draggableElement = document.querySelectorAll('.box');
+        const droppableElement = document.querySelectorAll('.droppable');
+        const remarksDiv = document.getElementById('remarksDiv');
+        let score = 0;
+
+        draggableElement.forEach(element => {
+            element.addEventListener('dragstart', (drgStrt) => {
+                drgStrt.dataTransfer.setData('text', drgStrt.target.id);
+                drgStrt.currentTarget.classList.add('draggableFormat');
+            });
+
+            element.addEventListener('dragend', (drgendEvt) => {
+                drgendEvt.currentTarget.classList.remove('draggableFormat');
+            });
+        });
+
+        droppableElement.forEach(element => {
+            element.addEventListener('dragover', (dragOver) => {
+                dragOver.preventDefault();
+            });
+
+            element.addEventListener('drop', (dropEvt) => {
+                dropEvt.preventDefault();
+                const droppedElementId = dropEvt.dataTransfer.getData('text');
+                const dropZoneId = dropEvt.target.getAttribute('data-draggable-id');
+                const droppedElement = document.getElementById(droppedElementId);
+
+                dropEvt.target.appendChild(droppedElement);
+
+                if (dropZoneId === droppedElementId.replace('drag', 'drop')) {
+                    score++;
+                    remarksDiv.innerText = 'Correct';
+                    scoreSection.innerText = `Score: ${score}`;
+                } else {
+                    remarksDiv.innerText = 'Incorrect';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
