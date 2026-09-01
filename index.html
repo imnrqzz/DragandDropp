@@ -274,6 +274,16 @@
             }
         }
 
+        function shuffleItems() {
+            const container = document.getElementById('draggableContainer');
+            const boxes = Array.from(container.querySelectorAll('.box'));
+            for (let i = boxes.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                container.insertBefore(boxes[j], boxes[i]);
+                [boxes[i], boxes[j]] = [boxes[j], boxes[i]];
+            }
+        }
+
         function resetGame() {
             stopTimer();
             timer = 0;
@@ -301,7 +311,13 @@
                 el.draggable = true;
                 el.classList.remove('dragging');
             });
+
+            // Shuffle the items so they don't match the drop order
+            shuffleItems();
         }
+
+        // Shuffle items on initial load
+        shuffleItems();
 
         draggableElements.forEach(element => {
             element.addEventListener('dragstart', (e) => {
