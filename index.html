@@ -56,11 +56,33 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .draggableContainer, .droppableContainer {
+        .draggableContainer {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
+        }
+        .droppableContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+        }
+        .image-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            justify-items: center;
+            width: 100%;
+        }
+        .image-row > div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            min-width: 0;
         }
         .box {
             background: #ffd93d;
@@ -83,19 +105,20 @@
         .box:active { cursor: grabbing; }
         .box.dragging { opacity: 0.5; }
         .droppable {
-            background: #fff;
-            height: 40px;
-            width: 150px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #333;
-            border: 2px dashed #bbb;
-            transition: background 0.2s, border-color 0.2s;
-        }
+                    background: #fff;
+                    height: 40px;
+                    width: 100%;
+                    max-width: 150px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    font-weight: 700;
+                    color: #333;
+                    border: 2px dashed #bbb;
+                    transition: background 0.2s, border-color 0.2s;
+                }
         .droppable.dragover { background: #c8e6c9; border-color: #4caf50; }
         .droppable.matched { background: #a5d6a7; border-style: solid; border-color: #4caf50; }
         .droppable.matched .box {
@@ -156,16 +179,19 @@
             margin-bottom: 10px;
         }
         .image-row img {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
+                    width: 100%;
+                    max-width: 60px;
+                    height: 60px;
+                    border-radius: 8px;
+                    object-fit: cover;
+                    border: 2px solid rgba(255,255,255,0.3);
+                }
         @media (max-width: 600px) {
             h1 { font-size: 1.5rem; }
-            .box, .droppable { width: 130px; font-size: 12px; }
+            .box { width: 130px; font-size: 12px; }
             .column { padding: 15px; }
+            .image-row { gap: 6px; }
+            .droppable { font-size: 11px; }
         }
     </style>
 </head>
